@@ -5,5 +5,5 @@ public interface IUnificavel {
     int ID = 0;
 
     //Metodos:
-    public int returnID ();
+    public int getID ();
 }
