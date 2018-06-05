@@ -12,6 +12,7 @@ public class ABBADAVL <E extends  IUnificavel>{
     }
 
     //Metodos:
+    //Visiveis para o usuario final:
     public void inserir (E dado) {
         if (this.raiz == null) {
             this.raiz = new NohAB(dado);
@@ -20,12 +21,12 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
     }
 
-    //Recursivos:
+    //Recursivo de insercao:
     private void insereRecursivo(E dado, NohAB raizAtual) {
         if (dado.getID() < raizAtual.getDado().getID()) { //Verificar se ele vai para a esquerda do noh:
             if (raizAtual.getFilhoEsquerdo() == null) {
                 raizAtual.setFilhoEsquerdo(new NohAB(dado, raizAtual));
-                raizAtual.setNivelAVL(raizAtual.getNivelAVL()+1);
+
                 return;
             } else {
                 this.insereRecursivo(dado, raizAtual.getFilhoEsquerdo());
@@ -41,8 +42,31 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
     }
 
-    public void excluir () {
+    //Metodos de ajuda:
+    //Verificar se o nodulo estah balanceado, comparando o nível dos filhos no estilo AVL
+    private int balanceamento (NohAB noh) {
+        if (noh == null) {
+            return 0; //Para nao quebrar o sistema
+        } else {
+            int alturaDireito;
+            int alturaEsquerdo;
+            if (noh.getFilhoDireito() == null) { //Recuparar o valor da altura do lado drieito do nodulo
+                alturaDireito = 0;
+            } else {
+                alturaDireito = noh.getFilhoDireito().getNivelAVL();
+            }
+            if (noh.getFilhoEsquerdo() == null) { //Recuparar o valor da altura do lado drieito do nodulo
+                alturaEsquerdo = 0;
+            } else {
+                alturaEsquerdo = noh.getFilhoEsquerdo().getNivelAVL();
+            }
+            //Retorna o valor do balanceamento:
+            return alturaDireito - alturaEsquerdo;
+        }
+    }
 
+    public void excluir () {
+        
     }
 
     public void procurar () {
