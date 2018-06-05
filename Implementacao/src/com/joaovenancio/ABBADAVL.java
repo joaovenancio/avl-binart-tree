@@ -43,8 +43,15 @@ public class ABBADAVL <E extends  IUnificavel>{
         //Verificar o indice de balanceamento da arvore e fazer as alteracoes nescessarias na esturutra:
         int indiceDeBalanceamento = this.balanceamento(raiz);
 
-        //
-        if ()
+        //Caso do giro simples a esquerda:
+        if (indiceDeBalanceamento > 1 && (raiz.getFilhoDireito().getFilhoDireito() != null)) {
+            this.girarEsquerda(raiz);
+            return;
+        }
+    }
+
+    private void girarEsquerda(NohAB raiz) {
+
     }
 
     //Metodos de ajuda:
