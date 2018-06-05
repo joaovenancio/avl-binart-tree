@@ -6,7 +6,7 @@ public class NohAB <E extends IUnificavel> {
     private NohAB filhoEsquerdo;
     private NohAB filhoDireito;
     private NohAB pai;
-    private int nivelAVL;
+    private int nivelArvore;
 
     //Construtor:
     public NohAB(E dado) {
@@ -14,7 +14,7 @@ public class NohAB <E extends IUnificavel> {
         this.filhoEsquerdo = null;
         this.filhoDireito = null;
         this.pai = null;
-        this.nivelAVL = 0;
+        this.nivelArvore = 0;
     }
 
     public NohAB(E dado, NohAB filhoEsquerdo, NohAB filhoDireito) {
@@ -22,7 +22,7 @@ public class NohAB <E extends IUnificavel> {
         this.filhoEsquerdo = filhoEsquerdo;
         this.filhoDireito = filhoDireito;
         this.pai = null;
-        this.nivelAVL = 0;
+        this.nivelArvore = 0;
     }
 
     public NohAB(E dado, NohAB pai) {
@@ -30,7 +30,7 @@ public class NohAB <E extends IUnificavel> {
         this.pai = pai;
         this.filhoEsquerdo = null;
         this.filhoDireito = null;
-        this.nivelAVL = 0;
+        this.nivelArvore = 0;
     }
 
     //Metodos:
@@ -66,11 +66,11 @@ public class NohAB <E extends IUnificavel> {
         this.pai = pai;
     }
 
-    public int getNivelAVL() {
-        return nivelAVL;
+    public int getNivelArvore() {
+        return nivelArvore;
     }
 
-    public void setNivelAVL(int nivelAVL) {
-        this.nivelAVL = nivelAVL;
+    public void setNivelArvore(int nivelArvore) {
+        this.nivelArvore = nivelArvore;
     }
 }
