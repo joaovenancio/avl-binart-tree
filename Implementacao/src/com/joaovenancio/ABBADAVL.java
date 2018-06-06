@@ -48,10 +48,76 @@ public class ABBADAVL <E extends  IUnificavel>{
             this.girarEsquerda(raiz);
             return;
         }
+
+        //Caso do giro simples a direita:
+        if (indiceDeBalanceamento < -1 && (raiz.getFilhoEsquerdo().getFilhoEsquerdo() != null)) {
+            this.girarDireita(raiz);
+            return;
+        }
+
+        //Caso do giro duplo a esquerda:
+        if (indiceDeBalanceamento > 1 && (raiz.getFilhoDireito().getFilhoDireito() != null)) {
+            this.girarDireita(raiz.getFilhoDireito());
+            this.girarEsquerda(raiz);
+            return;
+        }
+
+        //Caso do giro duplo a direita:
+        if (indiceDeBalanceamento < -1 && (raiz.getFilhoEsquerdo().getFilhoEsquerdo() != null)) {
+            this.girarEsquerda(raiz.getFilhoEsquerdo());
+            this.girarDireita(raiz);
+            return;
+        }
+
+        return;
     }
 
     private void girarEsquerda(NohAB raiz) {
+        NohAB nohPai = raiz.getPai();
+        if (raiz.equals(this.raiz)) {
+            nohPai = this.raiz;
+        }
+        //Pegar os valores para as trocas:
+        NohAB nohDireito = raiz.getFilhoDireito();
+        NohAB nohEsquerdoFilhoDireito = nohDireito.getFilhoEsquerdo();
 
+        //Fazer as trocas:
+        raiz.setFilhoDireito(nohEsquerdoFilhoDireito);
+        nohDireito.setFilhoEsquerdo(raiz);
+        if (nohPai.getFilhoDireito().equals(raiz)) {
+            nohPai.setFilhoDireito(nohDireito);
+        } else {
+            nohPai.setFilhoEsquerdo(nohDireito);
+        }
+
+        //Checar as alturas:
+        nohDireito.setNivelArvore(this.definirAlturaMaxima(nohDireito));
+        raiz.setNivelArvore(this.definirAlturaMaxima(raiz));
+        nohPai.setNivelArvore(this.definirAlturaMaxima(nohPai));
+    }
+
+    private void girarDireita (NohAB raiz) {
+        //Pegar os valores para as trocas:
+        NohAB nohPai = raiz.getPai();
+        if (raiz.equals(this.raiz)) {
+            nohPai = this.raiz;
+        }
+        NohAB nohEsquerdo = raiz.getFilhoEsquerdo();
+        NohAB nohDireitoFilhoEsquerdo = nohEsquerdo.getFilhoDireito();
+
+        //Fazer as trocas:
+        raiz.setFilhoDireito(nohDireitoFilhoEsquerdo);
+        nohEsquerdo.setFilhoDireito(raiz);
+        if (nohPai.getFilhoDireito().equals(raiz)) {
+            nohPai.setFilhoDireito(nohEsquerdo);
+        } else {
+            nohPai.setFilhoEsquerdo(nohEsquerdo);
+        }
+
+        //Checar as alturas:
+        nohEsquerdo.setNivelArvore(this.definirAlturaMaxima(nohEsquerdo));
+        raiz.setNivelArvore(this.definirAlturaMaxima(raiz));
+        nohPai.setNivelArvore(this.definirAlturaMaxima(nohPai));
     }
 
     //Metodos de ajuda:
@@ -70,7 +136,19 @@ public class ABBADAVL <E extends  IUnificavel>{
         if (noh == null) {
             return 0;
         } else {
-            return (noh.getFilhoDireito().getNivelArvore() > noh.getFilhoEsquerdo().getNivelArvore()) ? noh.getFilhoDireito().getNivelArvore() : noh.getFilhoEsquerdo().getNivelArvore();
+            int nivelArvoreDireita;
+            int nivelArvoreEsquerda;
+            if (noh.getFilhoDireito() == null) {
+                nivelArvoreDireita = 0;
+            } else {
+                nivelArvoreDireita = noh.getFilhoDireito().getNivelArvore();
+            }
+            if (noh.getFilhoEsquerdo() == null) {
+                nivelArvoreEsquerda = 0;
+            } else {
+                nivelArvoreEsquerda = noh.getFilhoEsquerdo().getNivelArvore();
+            }
+            return (nivelArvoreDireita > nivelArvoreEsquerda ) ? nivelArvoreDireita : nivelArvoreEsquerda;
         }
     }
 
@@ -111,4 +189,21 @@ public class ABBADAVL <E extends  IUnificavel>{
 
     }
 
+    /**
+     * Metodo para percorrer a arvore em pre ordem. Ele para quandoi nao existir mais nenhum no para ser impresso. A partir de um no, ele vai imprimindo todos os outros.
+     * Ele começa percorrendo todos os valores da esquerda (que sao os menores) ateh os da direita (os maiores).
+     *
+     * @param noh - Raiz da arvore.
+     */
+    public void preOredem (NohAB noh) {
+        if (noh != null) {
+            System.out.print(noh.getDado().getID() + " ");
+            preOredem(noh.getFilhoEsquerdo());
+            preOredem(noh.getFilhoDireito());
+        }
+    }
+
+    public NohAB getRaiz() {
+        return raiz;
+    }
 }
