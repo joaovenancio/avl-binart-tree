@@ -16,6 +16,7 @@ public class ABBADAVL <E extends  IUnificavel>{
     public void inserir (E dado) {
         if (this.raiz == null) {
             this.raiz = new NohAB(dado);
+            return;
         } else {
             this.insereRecursivo(dado, this.raiz);
         }
@@ -26,46 +27,44 @@ public class ABBADAVL <E extends  IUnificavel>{
         if (dado.getID() < raizAtual.getDado().getID()) { //Verificar se ele vai para a esquerda do nodulo atraves da chave do ID do objeto:
             if (raizAtual.getFilhoEsquerdo() == null) {
                 raizAtual.setFilhoEsquerdo(new NohAB(dado, raizAtual));
-                return;
             } else {
                 this.insereRecursivo(dado, raizAtual.getFilhoEsquerdo());
             }
         } else { //Entao eh o filho da direita:
             if (raizAtual.getFilhoDireito() == null) {
                 raizAtual.setFilhoDireito(new NohAB(dado, raizAtual));
-                return;
             } else {
                 this.insereRecursivo(dado, raizAtual.getFilhoDireito());
             }
         }
         //Atualizar os valores do nivel da arvore:
-        this.definirAlturaMaxima(raiz); //Como o metodo retorna ao adicionar uma nova folha a arovre, entao so os outros nodulos (NohAB) vao ter sua altura atualizada
+        raizAtual.setNivelArvore(this.definirAlturaMaxima(raizAtual)); //Como o metodo retorna ao adicionar uma nova folha a arovre, entao so os outros nodulos (NohAB) vao ter sua altura atualizada
         //Verificar o indice de balanceamento da arvore e fazer as alteracoes nescessarias na esturutra:
-        int indiceDeBalanceamento = this.balanceamento(raiz);
+        int indiceDeBalanceamento = this.balanceamento(raizAtual);
 
         //Caso do giro simples a esquerda:
-        if (indiceDeBalanceamento > 1 && (raiz.getFilhoDireito().getFilhoDireito() != null)) {
-            this.girarEsquerda(raiz);
+        if (indiceDeBalanceamento > 1 && ( this.balanceamento(raizAtual.getFilhoDireito())  > 0 ) ) {
+            this.girarEsquerda(raizAtual);
             return;
         }
 
         //Caso do giro simples a direita:
-        if (indiceDeBalanceamento < -1 && (raiz.getFilhoEsquerdo().getFilhoEsquerdo() != null)) {
-            this.girarDireita(raiz);
+        if (indiceDeBalanceamento < -1 && (this.balanceamento(raizAtual.getFilhoEsquerdo() ) < 0 )) {
+            this.girarDireita(raizAtual);
             return;
         }
 
         //Caso do giro duplo a esquerda:
-        if (indiceDeBalanceamento > 1 && (raiz.getFilhoDireito().getFilhoDireito() != null)) {
-            this.girarDireita(raiz.getFilhoDireito());
-            this.girarEsquerda(raiz);
+        if (indiceDeBalanceamento > 1 && (this.balanceamento(raizAtual.getFilhoDireito()) < 0 ) ) {
+            this.girarDireita(raizAtual.getFilhoDireito());
+            this.girarEsquerda(raizAtual);
             return;
         }
 
         //Caso do giro duplo a direita:
-        if (indiceDeBalanceamento < -1 && (raiz.getFilhoEsquerdo().getFilhoEsquerdo() != null)) {
-            this.girarEsquerda(raiz.getFilhoEsquerdo());
-            this.girarDireita(raiz);
+        if (indiceDeBalanceamento < -1 &&  (this.balanceamento(raizAtual.getFilhoEsquerdo() ) > 0 ) ) {
+            this.girarEsquerda(raizAtual.getFilhoEsquerdo());
+            this.girarDireita(raizAtual);
             return;
         }
 
@@ -84,16 +83,24 @@ public class ABBADAVL <E extends  IUnificavel>{
         //Fazer as trocas:
         raiz.setFilhoDireito(nohEsquerdoFilhoDireito);
         nohDireito.setFilhoEsquerdo(raiz);
-        if (nohPai.getFilhoDireito().equals(raiz)) {
-            nohPai.setFilhoDireito(nohDireito);
+        if (raiz.equals(this.raiz)) {
+           this.raiz = nohDireito;
         } else {
-            nohPai.setFilhoEsquerdo(nohDireito);
+            if (nohPai.getFilhoDireito().equals(raiz)) {
+                nohPai.setFilhoDireito(nohDireito);
+            } else {
+                nohPai.setFilhoEsquerdo(nohDireito);
+            }
         }
 
         //Checar as alturas:
-        nohDireito.setNivelArvore(this.definirAlturaMaxima(nohDireito));
+        if (nohEsquerdoFilhoDireito != null) {
+            nohEsquerdoFilhoDireito.setNivelArvore(this.definirAlturaMaxima(nohEsquerdoFilhoDireito));
+        }
         raiz.setNivelArvore(this.definirAlturaMaxima(raiz));
+        nohDireito.setNivelArvore(this.definirAlturaMaxima(nohDireito));
         nohPai.setNivelArvore(this.definirAlturaMaxima(nohPai));
+
     }
 
     private void girarDireita (NohAB raiz) {
@@ -108,15 +115,22 @@ public class ABBADAVL <E extends  IUnificavel>{
         //Fazer as trocas:
         raiz.setFilhoDireito(nohDireitoFilhoEsquerdo);
         nohEsquerdo.setFilhoDireito(raiz);
-        if (nohPai.getFilhoDireito().equals(raiz)) {
-            nohPai.setFilhoDireito(nohEsquerdo);
+        if (raiz.equals(this.raiz)) {
+            this.raiz = nohEsquerdo;
         } else {
-            nohPai.setFilhoEsquerdo(nohEsquerdo);
+            if (nohPai.getFilhoDireito().equals(raiz)) {
+                nohPai.setFilhoDireito(nohEsquerdo);
+            } else {
+                nohPai.setFilhoEsquerdo(nohEsquerdo);
+            }
         }
 
         //Checar as alturas:
+        if (nohDireitoFilhoEsquerdo == null) {
+            nohDireitoFilhoEsquerdo.setNivelArvore(this.definirAlturaMaxima(nohDireitoFilhoEsquerdo));
+        }
+        raiz.setNivelArvore(this.definirAlturaMaxima(raiz)); //A raiz que nao eh mais raiz e sim o novo nohEsquerdo
         nohEsquerdo.setNivelArvore(this.definirAlturaMaxima(nohEsquerdo));
-        raiz.setNivelArvore(this.definirAlturaMaxima(raiz));
         nohPai.setNivelArvore(this.definirAlturaMaxima(nohPai));
     }
 
@@ -148,7 +162,7 @@ public class ABBADAVL <E extends  IUnificavel>{
             } else {
                 nivelArvoreEsquerda = noh.getFilhoEsquerdo().getNivelArvore();
             }
-            return (nivelArvoreDireita > nivelArvoreEsquerda ) ? nivelArvoreDireita : nivelArvoreEsquerda;
+            return (nivelArvoreDireita > nivelArvoreEsquerda ) ? nivelArvoreDireita+1 : nivelArvoreEsquerda+1;
         }
     }
 
@@ -190,12 +204,20 @@ public class ABBADAVL <E extends  IUnificavel>{
     }
 
     /**
-     * Metodo para percorrer a arvore em pre ordem. Ele para quandoi nao existir mais nenhum no para ser impresso. A partir de um no, ele vai imprimindo todos os outros.
+     * Metodo para percorrer a arvore em pre ordem. Ele para quando nao existir mais nenhum no para ser impresso. A partir de um no, ele vai imprimindo todos os outros.
      * Ele começa percorrendo todos os valores da esquerda (que sao os menores) ateh os da direita (os maiores).
      *
      * @param noh - Raiz da arvore.
      */
-    public void preOredem (NohAB noh) {
+      public void preOredem (NohAB noh) {
+                if (noh != null) {
+                    System.out.print(noh.getDado().getID() + " ");
+                    preOredem(noh.getFilhoEsquerdo());
+             preOredem(noh.getFilhoDireito());
+        }
+    }
+
+    public void emOredemRecursivo (NohAB noh) {
         if (noh != null) {
             System.out.print(noh.getDado().getID() + " ");
             preOredem(noh.getFilhoEsquerdo());
