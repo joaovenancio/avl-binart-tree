@@ -17,6 +17,8 @@ public class Main {
         p5.setiD(50);
         Pessoa p6 = new Pessoa("Debora");
         p6.setiD(25);
+        Pessoa p7 = new Pessoa("Debora");
+        p6.setiD(9);
 
 
         arvore.inserir(p1);
@@ -25,6 +27,7 @@ public class Main {
         arvore.inserir(p4);
         arvore.inserir(p5);
         arvore.inserir(p6);
+        arvore.inserir(p7);
 
 
 

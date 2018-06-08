@@ -114,7 +114,12 @@ public class ABBADAVL <E extends  IUnificavel>{
 
         //Fazer as trocas:
         raiz.setFilhoDireito(nohDireitoFilhoEsquerdo);
+        nohDireitoFilhoEsquerdo.setPai(raiz);//Atualizar o pai de nohDireitoFilhoEsquerdo
+
         nohEsquerdo.setFilhoDireito(raiz);
+        raiz.setPai(nohEsquerdo);//Atualizar o pai do raiz
+
+        //Definir o link entre a arvore mais externa:
         if (raiz.equals(this.raiz)) {
             this.raiz = nohEsquerdo;
         } else {
@@ -124,6 +129,9 @@ public class ABBADAVL <E extends  IUnificavel>{
                 nohPai.setFilhoEsquerdo(nohEsquerdo);
             }
         }
+
+        //Atualizar o pai do nohEsquerdo:
+        nohEsquerdo.setPai(nohPai);
 
         //Checar as alturas:
         if (nohDireitoFilhoEsquerdo == null) {
