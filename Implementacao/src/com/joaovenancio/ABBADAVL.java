@@ -114,7 +114,9 @@ public class ABBADAVL <E extends  IUnificavel>{
 
         //Fazer as trocas:
         raiz.setFilhoDireito(nohDireitoFilhoEsquerdo);
-        nohDireitoFilhoEsquerdo.setPai(raiz);//Atualizar o pai de nohDireitoFilhoEsquerdo
+        if (nohDireitoFilhoEsquerdo != null) {
+            nohDireitoFilhoEsquerdo.setPai(raiz);//Atualizar o pai de nohDireitoFilhoEsquerdo
+        }
 
         nohEsquerdo.setFilhoDireito(raiz);
         raiz.setPai(nohEsquerdo);//Atualizar o pai do raiz
