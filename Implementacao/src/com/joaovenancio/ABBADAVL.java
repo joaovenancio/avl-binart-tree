@@ -82,7 +82,14 @@ public class ABBADAVL <E extends  IUnificavel>{
 
         //Fazer as trocas:
         raiz.setFilhoDireito(nohEsquerdoFilhoDireito);
+        if (nohEsquerdoFilhoDireito != null) {
+            nohEsquerdoFilhoDireito.setPai(raiz); //Atualizar o pai de nohEsquerdoFilhoDireito
+        }
+
         nohDireito.setFilhoEsquerdo(raiz);
+        raiz.setPai(nohDireito); //Atualizar o pai da raiz
+
+        //Definir o link entre a arvore mais externa:
         if (raiz.equals(this.raiz)) {
            this.raiz = nohDireito;
         } else {
@@ -92,6 +99,9 @@ public class ABBADAVL <E extends  IUnificavel>{
                 nohPai.setFilhoEsquerdo(nohDireito);
             }
         }
+
+        //Atualizar o pai do nohDireito:
+        nohDireito.setPai(nohPai);
 
         //Checar as alturas:
         if (nohEsquerdoFilhoDireito != null) {
@@ -136,7 +146,7 @@ public class ABBADAVL <E extends  IUnificavel>{
         nohEsquerdo.setPai(nohPai);
 
         //Checar as alturas:
-        if (nohDireitoFilhoEsquerdo == null) {
+        if (nohDireitoFilhoEsquerdo != null) {
             nohDireitoFilhoEsquerdo.setNivelArvore(this.definirAlturaMaxima(nohDireitoFilhoEsquerdo));
         }
         raiz.setNivelArvore(this.definirAlturaMaxima(raiz)); //A raiz que nao eh mais raiz e sim o novo nohEsquerdo

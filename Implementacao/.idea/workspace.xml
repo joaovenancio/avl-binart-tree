@@ -18,8 +18,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/joaovenancio/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            <state relative-caret-position="451">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
               <folding>
                 <element signature="e#136#144#0" expanded="true" />
               </folding>
@@ -83,8 +83,12 @@
       <file leaf-file-name="ABBADAVL.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/joaovenancio/ABBADAVL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="119" column="8" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="8" />
+            <state relative-caret-position="228">
+              <caret line="148" column="37" selection-start-line="148" selection-start-column="37" selection-end-line="148" selection-end-column="37" />
+              <folding>
+                <element signature="e#9286#9287#0" expanded="true" />
+                <element signature="e#9313#9314#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -291,6 +295,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2040">
           <caret line="120" selection-start-line="120" selection-end-line="120" />
+          <folding>
+            <element signature="e#9286#9287#0" expanded="true" />
+            <element signature="e#9313#9314#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -346,6 +354,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1751">
           <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+          <folding>
+            <element signature="e#9286#9287#0" expanded="true" />
+            <element signature="e#9313#9314#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -377,6 +389,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="52" column="41" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="41" />
+          <folding>
+            <element signature="e#9286#9287#0" expanded="true" />
+            <element signature="e#9313#9314#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -511,8 +527,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/joaovenancio/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="451">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="e#136#144#0" expanded="true" />
           </folding>
@@ -521,8 +537,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/joaovenancio/ABBADAVL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="119" column="8" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="8" />
+        <state relative-caret-position="228">
+          <caret line="148" column="37" selection-start-line="148" selection-start-column="37" selection-end-line="148" selection-end-column="37" />
+          <folding>
+            <element signature="e#9286#9287#0" expanded="true" />
+            <element signature="e#9313#9314#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
