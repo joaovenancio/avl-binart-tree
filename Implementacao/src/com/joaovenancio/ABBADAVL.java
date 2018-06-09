@@ -127,7 +127,7 @@ public class ABBADAVL <E extends  IUnificavel>{
         NohAB nohDireitoFilhoEsquerdo = nohEsquerdo.getFilhoDireito();
 
         //Fazer as trocas:
-        raiz.setFilhoDireito(nohDireitoFilhoEsquerdo);
+        raiz.setFilhoEsquerdo(nohDireitoFilhoEsquerdo);
         if (nohDireitoFilhoEsquerdo != null) {
             nohDireitoFilhoEsquerdo.setPai(raiz);//Atualizar o pai de nohDireitoFilhoEsquerdo
         }
@@ -189,6 +189,9 @@ public class ABBADAVL <E extends  IUnificavel>{
                 nivelArvoreEsquerda = 0;
             } else {
                 nivelArvoreEsquerda = noh.getFilhoEsquerdo().getNivelArvore();
+            }
+            if (noh.getFilhoDireito() == null && noh.getFilhoEsquerdo() == null) { //Caso ambos forem null, nao existem niveis, logo ele vai ser o primeiro nivel (0)
+                return 0;
             }
             return (nivelArvoreDireita > nivelArvoreEsquerda ) ? nivelArvoreDireita+1 : nivelArvoreEsquerda+1;
         }
