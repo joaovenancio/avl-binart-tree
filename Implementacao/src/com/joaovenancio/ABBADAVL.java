@@ -235,6 +235,133 @@ public class ABBADAVL <E extends  IUnificavel>{
     }
 
     /**
+     * Método que inicia a remoção de um nó da árvore
+     *
+     * @param aSerRemovido - Nó que desejamos remover
+     */
+    public void remover(int aSerRemovido) {
+        removerAVL(this.raiz, aSerRemovido);
+    }
+
+    /**
+     * Método que realiza a busca do nó a ser removido da árvore
+     *
+     * @param atual        - Nó de referência
+     * @param aSerRemovido - Nó a ser removido
+     */
+    private void removerAVL(NohAB atual, int aSerRemovido) {
+        if (atual == null) {
+            return;
+
+        } else {
+
+            if (atual.getDado().getID() > aSerRemovido) {
+                removerAVL(atual.getFilhoEsquerdo(), aSerRemovido);
+
+            } else if (atual.getDado().getID() < aSerRemovido) {
+                removerAVL(atual.getFilhoDireito(), aSerRemovido);
+
+            } else if (atual.getDado().getID() == aSerRemovido) {
+                removerNohABEncontrado(atual);
+            }
+        }
+    }
+
+    /**
+     * Método que remove o Nó após realizada a busca do nó a ser removido
+     *
+     * @param aRemover - Nó que será removido da aŕvore
+     */
+    public void removerNohABEncontrado(NohAB aRemover) {
+        //Crio uma varíavel na memória do tipo NohAB que servirá de apoio
+        NohAB r;
+
+        //Se o Nó a remover não tiver filhos a esquerda e a direta dele
+        if (aRemover.getFilhoEsquerdo() == null || aRemover.getFilhoDireito() == null) {
+            //Verifico se o Nó a remover não possui pai
+            if (aRemover.getPai() == null) {
+                //Caso não possua, significa que ele é a raiz da árvore, portanto mudo o apontamento do atributo raiz
+                this.raiz = null;
+                //Limpo o apontamento da variável do parâmetro
+                aRemover = null;
+                //Termino o método
+                return;
+            }
+            //Caso não passe no if, a variável de apoio recebe o Nó dado via parâmetro
+            r = aRemover;
+        } else {
+            //Então transformo o r no sucessor do nó dado como parâmetro
+            r = sucessor(aRemover);
+            //Dou um set nó a ser removido usando o dado do sucessor
+            aRemover.setDado(r.getDado());
+        }
+
+        //Crio outra variável de apoio
+        NohAB p;
+        //Caso a esquerda de r não estiver vazia
+        if (r.getFilhoEsquerdo() != null) {
+            //p ganha um apontamento para a subávore a esquerda
+            p = r.getFilhoEsquerdo();
+            //Caso contrário ele ganha um apontamento para a subárvore a direita
+        } else {
+            p = r.getFilhoDireito();
+        }
+        //Se p não estiver vazio
+        if (p != null) {
+            //p recebe como pai o pai de r
+            p.setPai(r.getPai());
+        }
+        //Caso o pai de r seja null, p vira a raiz da árvore toda
+        if (r.getPai() == null) {
+            this.raiz = p;
+            //Caso contrário
+        } else {
+            //Se r for igual ao pai da esquerda
+            if (r == r.getPai().getFilhoEsquerdo()) {
+                //r chama o pai dele e seta a p como subárvore a esquerda dele
+                r.getPai().setFilhoEsquerdo(p);
+                //Caso contrário
+            } else {
+                //r chama o pai dele e seta p como subárvore a direita dele
+                r.getPai().setFilhoDireito(p);
+            }
+            //Verfico o balanceamento passando o pai de r como parâmetro
+            NohAB raizPivo = r.getPai();
+
+            int indiceDeBalanceamento = this.balanceamento(raizPivo);
+
+            //Caso do giro simples a esquerda:
+            if (indiceDeBalanceamento > 1 && ( this.balanceamento(raizPivo.getFilhoDireito())  > 0 ) ) {
+                this.girarEsquerda(raizPivo);
+                return;
+            }
+
+            //Caso do giro simples a direita:
+            if (indiceDeBalanceamento < -1 && (this.balanceamento(raizPivo.getFilhoEsquerdo() ) < 0 )) {
+                this.girarDireita(raizPivo);
+                return;
+            }
+
+            //Caso do giro duplo a esquerda:
+            if (indiceDeBalanceamento > 1 && (this.balanceamento(raizPivo.getFilhoDireito()) < 0 ) ) {
+                this.girarDireita(raizPivo.getFilhoDireito());
+                this.girarEsquerda(raizPivo);
+                return;
+            }
+
+            //Caso do giro duplo a direita:
+            if (indiceDeBalanceamento < -1 &&  (this.balanceamento(raizPivo.getFilhoEsquerdo() ) > 0 ) ) {
+                this.girarEsquerda(raizPivo.getFilhoEsquerdo());
+                this.girarDireita(raizPivo);
+                return;
+            }
+
+        }
+        //apago o apontamento de r
+        r = null;
+    }
+
+    /**
      * Metodo para percorrer a arvore em pre ordem. Ele para quando nao existir mais nenhum no para ser impresso. A partir de um no, ele vai imprimindo todos os outros.
      * Ele começa percorrendo todos os valores da esquerda (que sao os menores) ateh os da direita (os maiores).
      *
@@ -247,6 +374,29 @@ public class ABBADAVL <E extends  IUnificavel>{
              preOredem(noh.getFilhoDireito());
         }
     }
+
+    /**
+     * @param q
+     * @return
+     */
+    public NohAB sucessor(NohAB q) {
+        if (q.getFilhoDireito() != null) {
+            NohAB r = q.getFilhoDireito();
+            while (r.getFilhoEsquerdo() != null) {
+                r = r.getFilhoEsquerdo();
+            }
+            return r;
+        } else {
+            NohAB p = q.getPai();
+            while (p != null && q == p.getFilhoDireito()) {
+                q = p;
+                p = q.getPai();
+            }
+            return p;
+        }
+    }
+
+
 
     public void emOredemRecursivo (NohAB noh) {
         if (noh != null) {

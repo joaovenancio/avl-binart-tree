@@ -42,7 +42,9 @@ public class Main {
 //        arvore.inserir(p2);
 //        arvore.inserir(p3);
 //
-//        arvore.preOredem(arvore.getRaiz());
+        arvore.preOredem(arvore.getRaiz());
 
+        arvore.remover(50);
+        arvore.remover(20);
     }
 }
