@@ -274,7 +274,7 @@ public class ABBADAVL <E extends  IUnificavel>{
      */
     public void removerNohABEncontrado(NohAB aRemover) {
         //Crio uma varíavel na memória do tipo NohAB que servirá de apoio
-        NohAB r;
+        NohAB apoio;
 
         //Se o Nó a remover não tiver filhos a esquerda e a direta dele
         if (aRemover.getFilhoEsquerdo() == null || aRemover.getFilhoDireito() == null) {
@@ -288,45 +288,47 @@ public class ABBADAVL <E extends  IUnificavel>{
                 return;
             }
             //Caso não passe no if, a variável de apoio recebe o Nó dado via parâmetro
-            r = aRemover;
+            apoio = aRemover;
         } else {
-            //Então transformo o r no sucessor do nó dado como parâmetro
-            r = sucessor(aRemover);
+            //Então transformo o apoio no sucessor do nó dado como parâmetro
+            apoio = sucessor(aRemover);
             //Dou um set nó a ser removido usando o dado do sucessor
-            aRemover.setDado(r.getDado());
+            aRemover.setDado(apoio.getDado());
         }
 
         //Crio outra variável de apoio
-        NohAB p;
-        //Caso a esquerda de r não estiver vazia
-        if (r.getFilhoEsquerdo() != null) {
-            //p ganha um apontamento para a subávore a esquerda
-            p = r.getFilhoEsquerdo();
+        NohAB subArvoreApoio;
+        //Caso a esquerda de apoio não estiver vazia
+        if (apoio.getFilhoEsquerdo() != null) {
+            //subArvoreApoio ganha um apontamento para a subávore a esquerda
+            subArvoreApoio = apoio.getFilhoEsquerdo();
             //Caso contrário ele ganha um apontamento para a subárvore a direita
         } else {
-            p = r.getFilhoDireito();
+            subArvoreApoio = apoio.getFilhoDireito();
         }
-        //Se p não estiver vazio
-        if (p != null) {
-            //p recebe como pai o pai de r
-            p.setPai(r.getPai());
+        //Se subArvoreApoio não estiver vazio
+        if (subArvoreApoio != null) {
+            //subArvoreApoio recebe como pai o pai de apoio
+            subArvoreApoio.setPai(apoio.getPai());
         }
-        //Caso o pai de r seja null, p vira a raiz da árvore toda
-        if (r.getPai() == null) {
-            this.raiz = p;
+        //Caso o pai de apoio seja null, subArvoreApoio vira a raiz da árvore toda
+        if (apoio.getPai() == null) {
+            this.raiz = subArvoreApoio;
             //Caso contrário
         } else {
-            //Se r for igual ao pai da esquerda
-            if (r == r.getPai().getFilhoEsquerdo()) {
-                //r chama o pai dele e seta a p como subárvore a esquerda dele
-                r.getPai().setFilhoEsquerdo(p);
+            //Se apoio for igual ao pai da esquerda
+            if (apoio == apoio.getPai().getFilhoEsquerdo()) {
+                //apoio chama o pai dele e seta a subArvoreApoio como subárvore a esquerda dele
+                apoio.getPai().setFilhoEsquerdo(subArvoreApoio);
+                apoio.getPai().setNivelArvore(this.definirAlturaMaxima(apoio.getPai()));
                 //Caso contrário
             } else {
-                //r chama o pai dele e seta p como subárvore a direita dele
-                r.getPai().setFilhoDireito(p);
+                //apoio chama o pai dele e seta subArvoreApoio como subárvore a direita dele
+                apoio.getPai().setFilhoDireito(subArvoreApoio);
+                apoio.getPai().setNivelArvore(this.definirAlturaMaxima(apoio.getPai()));
             }
-            //Verfico o balanceamento passando o pai de r como parâmetro
-            NohAB raizPivo = r.getPai();
+            //Verfico o balanceamento passando o pai de apoio como parâmetro
+            NohAB raizPivo = apoio.getPai();
 
             int indiceDeBalanceamento = this.balanceamento(raizPivo);
 
@@ -357,8 +359,8 @@ public class ABBADAVL <E extends  IUnificavel>{
             }
 
         }
-        //apago o apontamento de r
-        r = null;
+        //apago o apontamento de apoio
+        apoio = null;
     }
 
     /**
@@ -376,27 +378,25 @@ public class ABBADAVL <E extends  IUnificavel>{
     }
 
     /**
-     * @param q
+     * @param nohParaExcluir
      * @return
      */
-    public NohAB sucessor(NohAB q) {
-        if (q.getFilhoDireito() != null) {
-            NohAB r = q.getFilhoDireito();
-            while (r.getFilhoEsquerdo() != null) {
-                r = r.getFilhoEsquerdo();
+    public NohAB sucessor(NohAB nohParaExcluir) {
+        if (nohParaExcluir.getFilhoDireito() != null) {
+            NohAB nohApoio = nohParaExcluir.getFilhoDireito();
+            while (nohApoio.getFilhoEsquerdo() != null) {
+                nohApoio = nohApoio.getFilhoEsquerdo();
             }
-            return r;
+            return nohApoio;
         } else {
-            NohAB p = q.getPai();
-            while (p != null && q == p.getFilhoDireito()) {
-                q = p;
-                p = q.getPai();
+            NohAB p = nohParaExcluir.getPai();
+            while (p != null && nohParaExcluir == p.getFilhoDireito()) {
+                nohParaExcluir = p;
+                p = nohParaExcluir.getPai();
             }
             return p;
         }
     }
-
-
 
     public void emOredemRecursivo (NohAB noh) {
         if (noh != null) {
