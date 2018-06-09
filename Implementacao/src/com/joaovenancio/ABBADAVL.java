@@ -101,7 +101,11 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
 
         //Atualizar o pai do nohDireito:
-        nohDireito.setPai(nohPai);
+        if (this.raiz.equals(nohDireito)) {
+            nohDireito.setPai(null);
+        } else {
+            nohDireito.setPai(nohPai);
+        }
 
         //Checar as alturas:
         if (nohEsquerdoFilhoDireito != null) {
@@ -143,7 +147,11 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
 
         //Atualizar o pai do nohEsquerdo:
-        nohEsquerdo.setPai(nohPai);
+        if (this.raiz.equals(nohEsquerdo)) {
+            nohEsquerdo.setPai(null);
+        } else {
+            nohEsquerdo.setPai(nohPai);
+        }
 
         //Checar as alturas:
         if (nohDireitoFilhoEsquerdo != null) {
