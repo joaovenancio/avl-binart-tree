@@ -42,9 +42,29 @@ public class Main {
 //        arvore.inserir(p2);
 //        arvore.inserir(p3);
 //
-        arvore.preOredem(arvore.getRaiz());
+        //arvore.preOredem(arvore.getRaiz());
+
+        try {
+            System.out.println(arvore.buscar(20).getDado().getID());
+            System.out.println(arvore.buscar(25).getDado().getID());
+            System.out.println(arvore.buscar(50).getDado().getID());
+            System.out.println(arvore.buscar(100).getDado().getID());
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
 
         arvore.remover(50);
         arvore.remover(20);
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+        try {
+            System.out.println(arvore.buscar(10).getDado().getID());
+            System.out.println(arvore.buscar(20).getDado().getID());
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

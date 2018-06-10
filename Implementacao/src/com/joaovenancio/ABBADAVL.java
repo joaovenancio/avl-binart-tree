@@ -12,6 +12,7 @@ public class ABBADAVL <E extends  IUnificavel>{
     }
 
     //Metodos:
+    //--------------------------------------------------INSERIR--------------------------------------------------
     //Visiveis para o usuario final:
     public void inserir (E dado) {
         if (this.raiz == null) {
@@ -234,6 +235,7 @@ public class ABBADAVL <E extends  IUnificavel>{
 
     }
 
+    //--------------------------------------------------REMOVER--------------------------------------------------
     /**
      * Método que inicia a remoção de um nó da árvore
      *
@@ -397,6 +399,61 @@ public class ABBADAVL <E extends  IUnificavel>{
             return p;
         }
     }
+
+    //--------------------------------------------------BUSCAR--------------------------------------------------
+    /**
+     *
+     *
+     * @param idElemento
+     * @return
+     */
+    public NohAB buscar (int idElemento) throws RuntimeException {
+        if (this.raiz == null) { //Se não exisitr nenhum dado na arvore:
+            throw new RuntimeException("Não há nenhum dado nesta Árvore.");//Joga uma execao
+        } else { //Se o ID for o da primeira arvore:
+            if (this.raiz.getDado().getID() == idElemento) {
+                return this.raiz;
+            } else { //Caso não for, procurar recursivamente:
+                if (idElemento < this.raiz.getDado().getID()) { //Ver se o elemento eh menor para passar pelo filho da esquerda
+                    return this.buscarRecursivo(idElemento, this.raiz.getFilhoEsquerdo());
+//                    if (this.raiz.getFilhoEsquerdo() != null) { //Se por acaso existem valores para esquerda:
+//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoEsquerdo());
+//                    } else { //Se nao existirem, jogar uma execao:
+//                        throw new RuntimeException("Não foi encontrado o elemento de ID "+idElemento+".");
+//                    }
+                } else { //Procurar pelo filho da direita
+                    return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
+//                    if (this.raiz.getFilhoDireito() != null) { //Verificar se existem valores para a direita:
+//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
+//                    } else { //Caso contrario, terminar por aqui:
+//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
+//                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     *
+     * @param idProcurar
+     * @param noh
+     * @return
+     */
+    private NohAB buscarRecursivo (int idProcurar, NohAB noh) {
+        if (noh == null) { //Verificar se o noh do parametro eh nulo
+            throw new RuntimeException("Não foi encontrado o elemento de ID "+idProcurar+"."); //Se for, terminar a pesquisa
+        } else if (noh.getDado().getID() == idProcurar) { //Se nao for, verificar se eh o dado que estamos procurando
+            return noh; //Retornar o dado
+        } else { //Caso nao for o dado, procurar por ele de acordo com o valor da ID:
+            if (idProcurar < noh.getDado().getID()) { //Ver se o elemento eh menor para passar pelo filho da esquerda
+                return buscarRecursivo(idProcurar, noh.getFilhoEsquerdo()); //Chamar a recurssao
+            } else { //Procurar pelo filho da direita
+                return buscarRecursivo(idProcurar, noh.getFilhoDireito()); //Chamar a recurssao
+            }
+        }
+    }
+    //--------------------------------------------------------------------------------------------------------------
 
     public void emOredemRecursivo (NohAB noh) {
         if (noh != null) {
