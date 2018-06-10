@@ -45,10 +45,10 @@ public class Main {
         //arvore.preOredem(arvore.getRaiz());
 
         try {
-            System.out.println(arvore.buscar(20).getDado().getID());
-            System.out.println(arvore.buscar(25).getDado().getID());
-            System.out.println(arvore.buscar(50).getDado().getID());
-            System.out.println(arvore.buscar(100).getDado().getID());
+            System.out.println(arvore.buscar(20).getID());
+            System.out.println(arvore.buscar(25).getID());
+            System.out.println(arvore.buscar(50).getID());
+            System.out.println(arvore.buscar(100).getID());
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -61,10 +61,11 @@ public class Main {
         System.out.println();
 
         try {
-            System.out.println(arvore.buscar(10).getDado().getID());
-            System.out.println(arvore.buscar(20).getDado().getID());
+            System.out.println(arvore.buscar(10).getID());
+            System.out.println(arvore.buscar(20).getID());
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
+
     }
 }

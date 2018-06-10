@@ -7,7 +7,6 @@ public class ABBADAVL <E extends  IUnificavel>{
 
     //Construtor:
     public ABBADAVL () {
-        this.qtdElementos = 0;
         this.raiz = null;
     }
 
@@ -227,14 +226,6 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
     }
 
-    public void excluir () {
-
-    }
-
-    public void procurar () {
-
-    }
-
     //--------------------------------------------------REMOVER--------------------------------------------------
     /**
      * Método que inicia a remoção de um nó da árvore
@@ -274,7 +265,7 @@ public class ABBADAVL <E extends  IUnificavel>{
      *
      * @param aRemover - Nó que será removido da aŕvore
      */
-    public void removerNohABEncontrado(NohAB aRemover) {
+    private void removerNohABEncontrado(NohAB aRemover) {
         //Crio uma varíavel na memória do tipo NohAB que servirá de apoio
         NohAB apoio;
 
@@ -383,7 +374,7 @@ public class ABBADAVL <E extends  IUnificavel>{
      * @param nohParaExcluir
      * @return
      */
-    public NohAB sucessor(NohAB nohParaExcluir) {
+    private NohAB sucessor(NohAB nohParaExcluir) {
         if (nohParaExcluir.getFilhoDireito() != null) {
             NohAB nohApoio = nohParaExcluir.getFilhoDireito();
             while (nohApoio.getFilhoEsquerdo() != null) {
@@ -402,49 +393,41 @@ public class ABBADAVL <E extends  IUnificavel>{
 
     //--------------------------------------------------BUSCAR--------------------------------------------------
     /**
-     *
+     * Metodo que recebe um id e realiza uma busca binaria para achar o Objeto que possui esse parametro como ID. Retorna
+     * o Objeto se por acaso ele existir dentro da arvore, caso contrario, ele joga uma execao.
      *
      * @param idElemento
      * @return
      */
-    public NohAB buscar (int idElemento) throws RuntimeException {
+    public E buscar (int idElemento) throws RuntimeException {
         if (this.raiz == null) { //Se não exisitr nenhum dado na arvore:
             throw new RuntimeException("Não há nenhum dado nesta Árvore.");//Joga uma execao
         } else { //Se o ID for o da primeira arvore:
             if (this.raiz.getDado().getID() == idElemento) {
-                return this.raiz;
+                return (E) this.raiz.getDado();
             } else { //Caso não for, procurar recursivamente:
                 if (idElemento < this.raiz.getDado().getID()) { //Ver se o elemento eh menor para passar pelo filho da esquerda
                     return this.buscarRecursivo(idElemento, this.raiz.getFilhoEsquerdo());
-//                    if (this.raiz.getFilhoEsquerdo() != null) { //Se por acaso existem valores para esquerda:
-//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoEsquerdo());
-//                    } else { //Se nao existirem, jogar uma execao:
-//                        throw new RuntimeException("Não foi encontrado o elemento de ID "+idElemento+".");
-//                    }
                 } else { //Procurar pelo filho da direita
                     return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
-//                    if (this.raiz.getFilhoDireito() != null) { //Verificar se existem valores para a direita:
-//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
-//                    } else { //Caso contrario, terminar por aqui:
-//                        return this.buscarRecursivo(idElemento, this.raiz.getFilhoDireito());
-//                    }
                 }
             }
         }
     }
 
     /**
+     * Metodo de auxilio para realizar a busca. Realiza um busca binaria de forma recursiva, chamando ela mesma ate encontrar
+     * o dado desejado.
      *
-     *
-     * @param idProcurar
-     * @param noh
-     * @return
+     * @param idProcurar - ID do Objeto que se deseja encontrar
+     * @param noh - Noh de referencia para ser feito a comparacao
+     * @return o dado que possui a ID de input
      */
-    private NohAB buscarRecursivo (int idProcurar, NohAB noh) {
+    private E buscarRecursivo (int idProcurar, NohAB noh) throws RuntimeException {
         if (noh == null) { //Verificar se o noh do parametro eh nulo
             throw new RuntimeException("Não foi encontrado o elemento de ID "+idProcurar+"."); //Se for, terminar a pesquisa
         } else if (noh.getDado().getID() == idProcurar) { //Se nao for, verificar se eh o dado que estamos procurando
-            return noh; //Retornar o dado
+            return (E) noh.getDado(); //Retornar o dado
         } else { //Caso nao for o dado, procurar por ele de acordo com o valor da ID:
             if (idProcurar < noh.getDado().getID()) { //Ver se o elemento eh menor para passar pelo filho da esquerda
                 return buscarRecursivo(idProcurar, noh.getFilhoEsquerdo()); //Chamar a recurssao
