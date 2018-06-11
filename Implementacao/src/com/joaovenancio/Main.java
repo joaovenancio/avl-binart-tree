@@ -17,8 +17,6 @@ public class Main {
         p5.setiD(50);
         Pessoa p6 = new Pessoa("Debora");
         p6.setiD(25);
-        Pessoa p7 = new Pessoa("Debora");
-        p7.setiD(9);
 
 
         arvore.inserir(p1);
@@ -27,7 +25,6 @@ public class Main {
         arvore.inserir(p4);
         arvore.inserir(p5);
         arvore.inserir(p6);
-        // arvore.inserir(p7);
 
 
 
@@ -67,5 +64,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+        arvore.emOrdem();
     }
 }

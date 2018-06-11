@@ -1,5 +1,7 @@
 package com.joaovenancio;
 
+import java.util.ArrayList;
+
 public class ABBADAVL <E extends  IUnificavel>{
     //Atributos:
     private int qtdElementos;
@@ -437,16 +439,50 @@ public class ABBADAVL <E extends  IUnificavel>{
         }
     }
     //--------------------------------------------------------------------------------------------------------------
-
-    public void emOredemRecursivo (NohAB noh) {
-        if (noh != null) {
-            System.out.print(noh.getDado().getID() + " ");
-            preOredem(noh.getFilhoEsquerdo());
-            preOredem(noh.getFilhoDireito());
+    /**
+     * Método que faz a caminhada in-order na árvore.
+     *
+     */
+    public void emOrdem() {
+        // Crio um ArrayList para armazenar os dados da minha árvore
+        ArrayList<NohAB> array = new ArrayList<>();
+        // Chamo o método que realiza a caminhada pela árvore
+        emOrdem(this.raiz, array);
+        //Prepara para imprimir os IDs no console:
+        int i = 0;
+        NohAB noh = array.get(i);
+        //Fazer um loop infinito
+        while (noh != null) {
+            System.out.println(noh.getDado().getID()); //Imprimir o dado
+            i++; //Atualizar o iterador
+            try { //Se usa try-catch porque no ultimo get, ele vai tentar acessar um index acima do que a ArrayList tem, dando outOfBounds
+                noh = array.get(i);
+            } catch (IndexOutOfBoundsException e) { //Quando der outOfBounds, ele sai do loop
+                System.out.println("Fim."); //Avisa que terminou
+                break;
+            }
         }
     }
 
-    public NohAB getRaiz() {
-        return raiz;
+
+    /**
+     * Método que realiza a caminhada in-order na árvore. Ele recebe um ArrayList jah criada, entao fica adicionando a ela
+     * os valores em ordem.
+     *
+     * @param noh Raiz de referência para o ínicio da caminhada in-order
+     * @param lista - ArrayList que irá receber os dados da árvore
+     */
+    private void emOrdem(NohAB noh, ArrayList<NohAB> lista) {
+        //Se a raiz é nula, não faço nada
+        if (noh == null) {
+            return;
+        }
+        //Pego a árvore a esquerda da minha raiz e chamo o método recursivamente até chegar em uma folha
+        emOrdem(noh.getFilhoEsquerdo(), lista);
+        //Ao chegar na folha(nível mais profundo) Adiciono a lista o nó que foi passado por parâmetro
+        lista.add(noh);
+        //Logo em seguida, pego a árvore a direita do nó e chamo o método recursivamente até chegar em uma folha
+        emOrdem(noh.getFilhoDireito(), lista);
     }
+    
 }
