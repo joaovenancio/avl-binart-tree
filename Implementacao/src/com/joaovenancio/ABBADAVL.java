@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class ABBADAVL <E extends  IUnificavel>{
     //Atributos:
-    private int qtdElementos;
     private NohAB raiz;
 
     //Construtor:
@@ -484,5 +483,5 @@ public class ABBADAVL <E extends  IUnificavel>{
         //Logo em seguida, pego a árvore a direita do nó e chamo o método recursivamente até chegar em uma folha
         emOrdem(noh.getFilhoDireito(), lista);
     }
-    
+
 }
