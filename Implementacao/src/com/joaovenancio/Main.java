@@ -19,12 +19,22 @@ public class Main {
         p6.setiD(25);
 
 
+        System.out.println("Inserir:");
         arvore.inserir(p1);
+        System.out.println("Inserindo "+p1.getID()+".");
         arvore.inserir(p2);
+        System.out.println("Inserindo "+p2.getID()+".");
         arvore.inserir(p3);
+        System.out.println("Inserindo "+p3.getID()+".");
         arvore.inserir(p4);
+        System.out.println("Inserindo "+p4.getID()+".");
         arvore.inserir(p5);
+        System.out.println("Inserindo "+p5.getID()+".");
         arvore.inserir(p6);
+        System.out.println("Inserindo "+p6.getID()+".");
+
+        System.out.println();
+        System.out.println("Buscando:");
 
 
 
@@ -50,13 +60,20 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("Excuir:");
+        System.out.println("50");
         arvore.remover(50);
+        System.out.println("20");
         arvore.remover(20);
 
         System.out.println();
         System.out.println();
         System.out.println();
 
+        System.out.println("Buscando:");
         try {
             System.out.println(arvore.buscar(10).getID());
             System.out.println(arvore.buscar(20).getID());
@@ -64,11 +81,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
         System.out.println();
         System.out.println();
         System.out.println();
 
+        System.out.println("Imprimir a arvore:");
         arvore.emOrdem();
     }
 }
